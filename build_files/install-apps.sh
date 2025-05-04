@@ -12,47 +12,35 @@ declare -A RPM_PACKAGES=(
   ["fedora"]="\
     android-tools \
     aria2 \
-    audacity-freeworld \
     bchunk \
-    bleachbit \
-    coolercontrol \
+    distrobox \
     fuse-btfs \
     fuse-devel \
     fuse3-devel \
     gnome-disk-utility \
     gparted \
     gwenview \
-    isoimagewriter \
     kcalc \
     kgpg \
     ksystemlog \
-    nmap \
     openrgb \
-    printer-driver-brlaser \
+    podman \
     qemu-kvm \
     virt-manager \
     virt-viewer \
-    wireshark \
-    yakuake \
+    tailscale \
     yt-dlp"
 
   ["fedora-multimedia"]="\
-    HandBrake-cli \
-    HandBrake-gui \
     haruna \
-    mpv \
-    vlc-plugin-bittorrent \
-    vlc-plugin-ffmpeg \
-    vlc-plugin-kde \
-    vlc-plugin-pause-click \
-    vlc"
-
+    mpv"
   ["docker-ce"]="\
     containerd.io \
     docker-buildx-plugin \
     docker-ce \
     docker-ce-cli \
     docker-compose-plugin"
+
 
   ["brave-browser"]="brave-browser"
   ["cloudflare-warp"]="cloudflare-warp"
@@ -81,7 +69,7 @@ for repo in "${!RPM_PACKAGES[@]}"; do
 done
 
 log "Enabling system services"
-systemctl enable docker.socket libvirtd.service
+systemctl enable podman.socket libvirtd.service tailscaled.service
 
 log "Installing Cursor GUI"
 GUI_DIR="/tmp/cursor-gui"
@@ -114,7 +102,7 @@ log "Adding Amy OS just recipes"
 echo "import \"/usr/share/amyos/just/amy.just\"" >>/usr/share/ublue-os/justfile
 
 log "Hide incompatible Bazzite just recipes"
-for recipe in "bazzite-cli" "install-coolercontrol" "install-openrgb" "install-docker"; do
+for recipe in "bazzite-cli" "install-coolercontrol" "install-openrgb"; do
   if ! grep -l "^$recipe:" /usr/share/ublue-os/just/*.just | grep -q .; then
     echo "Error: Recipe $recipe not found in any just file"
     exit 1
