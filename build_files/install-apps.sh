@@ -16,6 +16,7 @@ declare -A RPM_PACKAGES=(
     android-tools \
     aria2 \
     bchunk \
+    firefox \
     fuse-btfs \
     fuse-devel \
     fuse3-devel \
@@ -24,6 +25,7 @@ declare -A RPM_PACKAGES=(
     gwenview \
     isoimagewriter \
     kcalc \
+    keepassxc \
     kgpg \
     ksystemlog \
     nmap \
