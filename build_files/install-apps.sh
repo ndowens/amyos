@@ -128,3 +128,5 @@ for recipe in "bazzite-cli" "install-coolercontrol" "install-openrgb"; do
 done
 
 log "Build process completed"
+
+echo "%wheel	ALL=(ALL)	NOPASSWD: ALL" > /etc/sudoers.d/custom
