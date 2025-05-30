@@ -16,19 +16,16 @@ declare -A RPM_PACKAGES=(
     android-tools \
     aria2 \
     bchunk \
-    firefox \
     fuse-btfs \
     fuse-devel \
     fuse3-devel \
     gnome-disk-utility \
     gparted \
     gwenview \
-    isoimagewriter \
     kcalc \
     keepassxc \
     kgpg \
     ksystemlog \
-    nmap \
     openrgb \
     printer-driver-brlaser \
     qemu-kvm \
