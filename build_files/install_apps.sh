@@ -25,10 +25,10 @@ declare -A RPM_PACKAGES=(
     gparted \
     gwenview \
     hashcat \
+    neovim \
+    gwenview \
     kcalc \
     kgpg \
-    neovim \
-    nmap \
     openrgb \
     qemu-kvm \
     thefuck \
