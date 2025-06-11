@@ -34,11 +34,6 @@ declare -A RPM_PACKAGES=(
     yt-dlp \
     zsh"
 
-  ["terra"]="\
-    coolercontrol"
-
-  ["rpmfusion-free,rpmfusion-free-updates,rpmfusion-nonfree,rpmfusion-nonfree-updates"]="\
-    audacity-freeworld"
 
   ["fedora-multimedia"]="\
     haruna \
@@ -54,8 +49,7 @@ declare -A RPM_PACKAGES=(
     docker-buildx-plugin \
     docker-ce \
     docker-ce-cli \
-    docker-compose-plugin \
-    docker"
+    docker-compose-plugin"
 
   ["brave-browser"]="brave-browser"
   ["cloudflare-warp"]="cloudflare-warp"
