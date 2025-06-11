@@ -21,12 +21,13 @@ declare -A RPM_PACKAGES=(
     fuse3-devel \
     keepassxc \
     tailscale \
-    gnome-disk-utility \
     gparted \
     gwenview \
+    hashcat \
     kcalc \
     kgpg \
-    ksystemlog \
+    neovim \
+    nmap \
     openrgb \
     qemu-kvm \
     virt-manager \
@@ -34,16 +35,18 @@ declare -A RPM_PACKAGES=(
     yt-dlp \
     zsh"
 
+  ["terra"]="\
+    coolercontrol \
+    ghostty \
+    hack-nerd-fonts \
+    ubuntu-nerd-fonts \
+    ubuntumono-nerd-fonts \
+    ubuntusans-nerd-fonts"
 
   ["fedora-multimedia"]="\
     haruna \
-    mpv \
-    vlc-plugin-bittorrent \
-    vlc-plugin-ffmpeg \
-    vlc-plugin-kde \
-    vlc-plugin-pause-click \
-    vlc"
-
+    mpv"
+  
   ["docker-ce"]="\
     containerd.io \
     docker-buildx-plugin \
@@ -84,7 +87,7 @@ log "Adding Amy OS just recipes"
 echo "import \"/usr/share/amyos/just/amy.just\"" >>/usr/share/ublue-os/justfile
 
 log "Hide incompatible Bazzite just recipes"
-for recipe in "bazzite-cli" "install-coolercontrol" "install-openrgb"; do
+for recipe in "install-coolercontrol" "install-openrgb"; do
   if ! grep -l "^$recipe:" /usr/share/ublue-os/just/*.just | grep -q .; then
     echo "Error: Recipe $recipe not found in any just file"
     exit 1
