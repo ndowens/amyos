@@ -32,6 +32,7 @@ declare -A RPM_PACKAGES=(
     openrgb \
     qemu-kvm \
     thefuck \
+    util-linux \
     virt-manager \
     virt-viewer \
     yt-dlp \
