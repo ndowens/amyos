@@ -27,12 +27,12 @@ A custom Fedora Atomic image designed for gaming, development and daily use.
 - Audacious with Winamp skins
 - Brave Browser
 - Cloudflare WARP
-- Curated list of [Flatpaks](https://github.com/astrovm/amyos/blob/main/repo_files/flatpaks)
+- Curated list of [Flatpaks](https://github.com/astrovm/amyos/blob/main/repo_files/flatpaks), [Homebrews](https://github.com/astrovm/amyos/blob/main/repo_files/brews) and [AppImages](https://github.com/astrovm/amyos/blob/main/repo_files/appimages)
 - DNS over TLS, DNSSEC and MAC address randomization enabled
 - Docker, Podman, Distrobox and Toolbx
 - Fixed Plasma integration with Google Drive
 - Ghostty terminal, Starship prompt, Zsh, `fuck` alias and Atuin history search (Ctrl+R)
-- Nix package manager with GPU drivers symlink and custom Home Manager config
+- Nix package manager compatibility with GPU drivers symlink
 - OpenRGB and CoolerControl
 - Sonic Adventure mods (SADX and SA2) setup script
 - Switch to standalone SteamOS session from login screen
@@ -66,14 +66,17 @@ ujust amy-install
 # Install only Flatpaks
 ujust amy-install-flatpaks
 
+# Install only Homebrews
+ujust amy-install-brews
+
+# Install only AppImages
+ujust amy-install-appimages
+
 # Install only Nix packages
 ujust amy-install-nixpkgs
 
 # Setup Amy OS settings for Cursor and VSCode
 ujust amy-setup-editors
-
-# Setup Nix Home Manager with Amy OS config
-ujust amy-setup-home
 
 # Setup Nix package manager
 ujust amy-setup-nix
@@ -92,7 +95,7 @@ ujust amy-ssd-crypto
 
 GUI apps can be found as Flatpaks in the Discover app or [FlatHub](https://flathub.org/) and installed with `flatpak install ...`.
 
-CLI apps are available from [Nix](https://search.nixos.org/packages) using `nix profile install nixpkgs#...` or setting up Home Manager with `ujust amy-setup-home` and changing `~/.config/home-manager/home.nix` packages list. GUI apps usually work fine too.
+CLI apps are available from [Homebrew](https://formulae.brew.sh/) using `brew install ...` and [Nix](https://search.nixos.org/packages) using `nix profile install nixpkgs#...`.
 
 ## Acknowledgments
 

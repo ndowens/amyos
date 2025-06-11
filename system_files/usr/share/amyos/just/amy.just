@@ -1,5 +1,5 @@
-# Install all Amy OS apps
-amy-install: amy-install-flatpaks amy-install-nixpkgs
+# Install all Amy OS curated apps
+amy-install: amy-install-flatpaks amy-install-brews amy-install-appimages amy-install-nixpkgs
 
 # Install only Flatpaks
 amy-install-flatpaks:
@@ -9,6 +9,64 @@ amy-install-flatpaks:
   echo "Installing Flatpaks..."
   xargs -a <(curl --retry 3 -sL https://raw.githubusercontent.com/astrovm/amyos/main/repo_files/flatpaks) flatpak --system -y install
   echo "Flatpaks installation complete."
+
+# Install only Homebrews
+amy-install-brews:
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  echo "Installing Homebrews..."
+  xargs -a <(curl --retry 3 -sL https://raw.githubusercontent.com/astrovm/amyos/main/repo_files/brews) brew install
+  echo "Homebrews installation complete."
+
+# Install only AppImages
+amy-install-appimages:
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  DOWNLOAD_DIR="${XDG_DOWNLOAD_DIR:-${HOME}/Downloads}"
+  [ ! -d "$DOWNLOAD_DIR" ] && DOWNLOAD_DIR="$HOME"
+
+  # Install Gear Lever if not installed
+  flatpak list | grep -q "it.mijorus.gearlever" || flatpak --system -y install it.mijorus.gearlever
+
+  while IFS=, read -r name url; do
+    [ -z "$name" ] || [ -z "$url" ] && continue
+    echo "Processing $name..."
+
+    # Skip if installed
+    if flatpak run it.mijorus.gearlever --list-installed | grep -qi "${name}.appimage"; then
+      echo "$name already installed"
+      continue
+    fi
+
+    # Handle GitHub wildcards
+    if [[ "$url" =~ github.com/([^/]+/[^/]+)/releases/download/[^/]*/([^/]*) ]] && [[ "$url" == *"*"* ]]; then
+      pattern="$(echo "${BASH_REMATCH[2]}" | sed 's/\./\\./g' | sed 's/\*/.*/g')"
+      # Try each release until we find one with an AppImage
+      url=""
+      while read -r release_url; do
+        if [[ "$release_url" =~ $pattern ]]; then
+          url="$release_url"
+          break
+        fi
+      done < <(curl --retry 3 -sL "https://api.github.com/repos/${BASH_REMATCH[1]}/releases" | jq -r ".[].assets[].browser_download_url")
+      [ -z "$url" ] && {
+        echo "No release found for $name"
+        continue
+      }
+    fi
+
+    # Download and install
+    appimage="$DOWNLOAD_DIR/${name}.appimage"
+    if aria2c --dir="$(dirname "$appimage")" --out="$(basename "$appimage")" --max-tries=3 --connect-timeout=30 "$url" && chmod +x "$appimage" && flatpak run it.mijorus.gearlever --integrate "$appimage" -y; then
+      echo "$name installed successfully"
+    else
+      echo "Failed to install $name"
+    fi
+    rm -f "$appimage"
+  done < <(curl --retry 3 -sL https://raw.githubusercontent.com/astrovm/amyos/main/repo_files/appimages)
+  echo "AppImages installation complete."
 
 # Install only Nix packages
 amy-install-nixpkgs:
@@ -53,56 +111,6 @@ amy-setup-nix:
   curl --proto '=https' --tlsv1.2 -sSf -L "$NIX_INSTALLER" | sh -s -- install --no-confirm
   [ -f "$NIX_DAEMON_SCRIPT" ] && . "$NIX_DAEMON_SCRIPT"
   echo "Nix setup complete."
-
-# Setup Nix Home Manager with Amy OS config
-amy-setup-home:
-  #!/usr/bin/env bash
-  set -euo pipefail
-
-  # Source Nix daemon if available
-  NIX_DAEMON_SCRIPT="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-  [ -f "$NIX_DAEMON_SCRIPT" ] && . "$NIX_DAEMON_SCRIPT"
-  command -v nix &>/dev/null || ujust amy-setup-nix
-
-  echo "Setting up Nix Home Manager..."
-
-  # Resolve real home path in case it's a symlink
-  REAL_HOME=$(readlink -f "$HOME")
-  HM_CONFIG_DIR="${REAL_HOME}/.config/home-manager"
-  SKEL_CONFIG_DIR="/etc/skel/.config/home-manager"
-  CONFIG_FILES=("user.nix" "home.nix" "flake.nix")
-
-  # Create config directory if it doesn't exist
-  mkdir -p "$HM_CONFIG_DIR"
-
-  # Check and handle each config file
-  for file in "${CONFIG_FILES[@]}"; do
-    user_file="${HM_CONFIG_DIR}/${file}"
-    skel_file="${SKEL_CONFIG_DIR}/${file}"
-
-    if [ ! -f "$user_file" ]; then
-      echo "Copying $file from skeleton..."
-      cp "$skel_file" "$user_file"
-    elif ! cmp -s "$user_file" "$skel_file"; then
-      echo "Warning: $file exists and differs from skeleton file."
-      echo "Please manually merge your changes or backup and remove the file to use defaults."
-      exit 1
-    fi
-  done
-
-  # Configure user.nix
-  echo "Configuring user settings..."
-  sed -i "0,/userName = \"\"/s//userName = \"$USER\"/" "$HM_CONFIG_DIR/user.nix"
-  sed -i "s|homeDirectory = \"\"|homeDirectory = \"$REAL_HOME\"|" "$HM_CONFIG_DIR/user.nix"
-
-  # Prompt for Git configuration
-  read -p "Enter your Git user name: " git_name
-  read -p "Enter your Git email: " git_email
-  sed -i "/gitConfig = {/,/};/c\\  gitConfig = {\n    userName = \"$git_name\";\n    userEmail = \"$git_email\";\n  };" "$HM_CONFIG_DIR/user.nix"
-
-  # Initialize and switch to the new configuration
-  nix run home-manager/master -- init --switch "$HM_CONFIG_DIR"
-  echo "Nix Home Manager setup complete."
 
 # Setup Amy OS recommended settings for Cursor and VSCode
 amy-setup-editors:
