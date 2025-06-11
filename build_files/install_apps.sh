@@ -54,7 +54,8 @@ declare -A RPM_PACKAGES=(
     docker-buildx-plugin \
     docker-ce \
     docker-ce-cli \
-    docker-compose-plugin"
+    docker-compose-plugin \
+    docker"
 
   ["brave-browser"]="brave-browser"
   ["cloudflare-warp"]="cloudflare-warp"
