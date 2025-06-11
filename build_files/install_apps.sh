@@ -21,6 +21,7 @@ declare -A RPM_PACKAGES=(
     fuse3-devel \
     keepassxc \
     tailscale \
+    fzf \
     gparted \
     gwenview \
     hashcat \
@@ -30,6 +31,7 @@ declare -A RPM_PACKAGES=(
     nmap \
     openrgb \
     qemu-kvm \
+    thefuck \
     virt-manager \
     virt-viewer \
     yt-dlp \
