@@ -35,6 +35,7 @@ declare -A RPM_PACKAGES=(
     virt-manager \
     virt-viewer \
     yt-dlp \
+    zsh-autosuggestions \
     zsh"
 
   ["terra"]="\
@@ -89,6 +90,17 @@ systemctl enable docker.socket libvirtd.service
 
 log "Adding Amy OS just recipes"
 echo "import \"/usr/share/amyos/just/amy.just\"" >>/usr/share/ublue-os/justfile
+
+log "Adding Starship and The Fuck to bash and zsh"
+{
+  echo "eval \"\$(starship init bash)\""
+  echo "eval \"\$(thefuck --alias)\""
+} >>/etc/bashrc
+{
+  echo "source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  echo "eval \"\$(starship init zsh)\""
+  echo "eval \"\$(thefuck --alias)\""
+} >>/etc/zshrc
 
 log "Hide incompatible Bazzite just recipes"
 for recipe in "install-coolercontrol" "install-openrgb"; do
