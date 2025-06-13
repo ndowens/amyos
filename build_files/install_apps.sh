@@ -41,8 +41,6 @@ declare -A RPM_PACKAGES=(
     zsh"
 
   ["terra"]="\
-    coolercontrol \
-    ghostty \
     hack-nerd-fonts \
     starship \
     ubuntu-nerd-fonts \
@@ -62,7 +60,6 @@ declare -A RPM_PACKAGES=(
 
   ["brave-browser"]="brave-browser"
   ["cloudflare-warp"]="cloudflare-warp"
-  ["vscode"]="code"
 )
 
 log "Starting Amy OS build process"
