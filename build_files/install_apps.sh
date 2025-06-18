@@ -47,7 +47,7 @@ declare -A RPM_PACKAGES=(
 
 
   ["fedora-multimedia"]="\
-    mpv 
+    mpv" 
 
   ["docker-ce"]="\
     containerd.io \
