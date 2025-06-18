@@ -24,7 +24,7 @@ declare -A RPM_PACKAGES=(
     gparted \
     gwenview \
     hashcat \
-    keepassxc
+    keepassxc \
     kcalc \
     kgpg \
     ksystemlog \
@@ -39,8 +39,6 @@ declare -A RPM_PACKAGES=(
     zsh"
 
   ["terra"]="\
-    coolercontrol \
-    ghostty \
     hack-nerd-fonts \
     starship \
     ubuntu-nerd-fonts \
