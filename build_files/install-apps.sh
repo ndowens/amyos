@@ -16,7 +16,6 @@ declare -A RPM_PACKAGES=(
     android-tools \
     aria2 \
     bchunk \
-    bleachbit \
     fuse-btfs \
     fuse-devel \
     fuse3-devel \
@@ -25,21 +24,16 @@ declare -A RPM_PACKAGES=(
     gparted \
     gwenview \
     hashcat \
-    isoimagewriter \
+    keepassxc
     kcalc \
     kgpg \
     ksystemlog \
     neovim \
-    nmap \
-    openrgb \
-    printer-driver-brlaser \
     qemu-kvm \
     thefuck \
     util-linux \
     virt-manager \
     virt-viewer \
-    wireshark \
-    yakuake \
     yt-dlp \
     zsh-autosuggestions \
     zsh"
@@ -53,21 +47,9 @@ declare -A RPM_PACKAGES=(
     ubuntumono-nerd-fonts \
     ubuntusans-nerd-fonts"
 
-  ["rpmfusion-free,rpmfusion-free-updates,rpmfusion-nonfree,rpmfusion-nonfree-updates"]="\
-    audacious \
-    audacious-plugins-freeworld \
-    audacity-freeworld"
 
   ["fedora-multimedia"]="\
-    HandBrake-cli \
-    HandBrake-gui \
-    haruna \
-    mpv \
-    vlc-plugin-bittorrent \
-    vlc-plugin-ffmpeg \
-    vlc-plugin-kde \
-    vlc-plugin-pause-click \
-    vlc"
+    mpv 
 
   ["docker-ce"]="\
     containerd.io \
