@@ -78,7 +78,7 @@ declare -A RPM_PACKAGES=(
 
   ["brave-browser"]="brave-browser"
   ["cloudflare-warp"]="cloudflare-warp"
-  ["sneezy"]="floorp"
+  ["floorp"]="copr:sneezy"
 )
 
 log "Starting Amy OS build process"
