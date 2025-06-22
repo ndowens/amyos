@@ -13,20 +13,17 @@ mkdir /nix
 # RPM packages list
 declare -A RPM_PACKAGES=(
   ["fedora"]="\
-    android-tools \
     aria2 \
     bchunk \
     fuse-btfs \
     fuse-devel \
     fuse3-devel \
     fzf \
-    gnome-disk-utility \
     gparted \
     gwenview \
     hashcat \
     keepassxc \
     kcalc \
-    kgpg \
     ksystemlog \
     neovim \
     qemu-kvm \
@@ -40,7 +37,6 @@ declare -A RPM_PACKAGES=(
 
   ["terra"]="\
     hack-nerd-fonts \
-    starship \
     ubuntu-nerd-fonts \
     ubuntumono-nerd-fonts \
     ubuntusans-nerd-fonts"
@@ -84,7 +80,7 @@ for repo in "${!RPM_PACKAGES[@]}"; do
 done
 
 log "Enabling system services"
-systemctl enable docker.socket libvirtd.service
+systemctl enable podman.service libvirtd.service
 
 log "Installing Cursor GUI"
 GUI_DIR="/tmp/cursor-gui"
