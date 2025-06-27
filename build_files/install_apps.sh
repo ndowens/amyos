@@ -55,6 +55,7 @@ declare -A RPM_PACKAGES=(
   ["brave-browser"]="brave-browser"
   ["cloudflare-warp"]="cloudflare-warp"
   ["copr:sneexy/zen-browser"]="zen-browser"
+  ["copr:bieszczaders/kernel-cachyos-lto"]="kernel-cachyos-lto"
 )
 
 log "Starting Amy OS build process"
