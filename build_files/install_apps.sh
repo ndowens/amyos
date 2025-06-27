@@ -60,8 +60,6 @@ declare -A RPM_PACKAGES=(
 
 log "Starting Amy OS build process"
 
-dnf5 -y remove kernel kernel-modules
-
 log "Installing RPM packages"
 mkdir -p /var/opt
 for repo in "${!RPM_PACKAGES[@]}"; do
