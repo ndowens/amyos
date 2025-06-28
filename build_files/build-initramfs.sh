@@ -10,7 +10,6 @@ log() {
 log "Building initramfs"
 
 # Get kernel version and build initramfs
-dnf5 repoquery --installed kernel-cachyos-lto
 KERNEL_VERSION="$(dnf5 repoquery --installed --queryformat='%{evr}.%{arch}' kernel)"
 /usr/bin/dracut \
   --no-hostonly \
