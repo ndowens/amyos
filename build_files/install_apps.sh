@@ -25,6 +25,7 @@ declare -A RPM_PACKAGES=(
     keepassxc \
     kcalc \
     ksystemlog \
+    libcap-ng libcap-ng-devel procps-ng procps-ng-devel \
     neovim \
     qemu-kvm \
     thefuck \
@@ -56,6 +57,7 @@ declare -A RPM_PACKAGES=(
   ["cloudflare-warp"]="cloudflare-warp"
   ["copr:sneexy/zen-browser"]="zen-browser"
   ["copr:bieszczaders/kernel-cachyos-lto"]="kernel-cachyos-lto"
+  ["copr:bieszczaders/kernel-cachyos-addons"]="uksmd"
 )
 
 log "Starting Amy OS build process"
@@ -81,7 +83,7 @@ for repo in "${!RPM_PACKAGES[@]}"; do
 done
 
 log "Enabling system services"
-systemctl enable podman.service libvirtd.service
+systemctl enable podman.service libvirtd.service uksmd.service
 
 log "Installing Cursor GUI"
 GUI_DIR="/tmp/cursor-gui"
