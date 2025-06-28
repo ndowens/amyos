@@ -59,7 +59,7 @@ declare -A RPM_PACKAGES=(
 )
 
 log "Starting Amy OS build process"
-
+setsebool -P domain_kernel_load_modules on
 log "Installing RPM packages"
 mkdir -p /var/opt
 for repo in "${!RPM_PACKAGES[@]}"; do
