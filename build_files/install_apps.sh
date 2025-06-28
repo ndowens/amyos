@@ -53,18 +53,13 @@ declare -A RPM_PACKAGES=(
     docker-ce-cli \
     docker-compose-plugin"
 
-  ["brave-browser"]="brave-browser"
   ["cloudflare-warp"]="cloudflare-warp"
   ["copr:sneexy/zen-browser"]="zen-browser"
-  ["copr:bieszczaders/kernel-cachyos-lto"]="kernel-cachyos-lto"
-  ["copr:bieszczaders/kernel-cachyos-addons"]="uksmd"
 )
 
 log "Starting Amy OS build process"
-setsebool -P domain_kernel_load_modules on
 log "Installing RPM packages"
 mkdir -p /var/opt
-dnf5 -y copr enable ublue/os-akmods
 for repo in "${!RPM_PACKAGES[@]}"; do
   read -ra pkg_array <<<"${RPM_PACKAGES[$repo]}"
   if [[ $repo == copr:* ]]; then
@@ -84,7 +79,7 @@ for repo in "${!RPM_PACKAGES[@]}"; do
 done
 
 log "Enabling system services"
-systemctl enable podman.service libvirtd.service uksmd.service
+systemctl enable docker.socket libvirtd.service
 
 log "Installing Cursor GUI"
 GUI_DIR="/tmp/cursor-gui"
