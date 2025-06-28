@@ -64,6 +64,7 @@ log "Starting Amy OS build process"
 setsebool -P domain_kernel_load_modules on
 log "Installing RPM packages"
 mkdir -p /var/opt
+dnf5 -y copr enable ublue/os-akmods
 for repo in "${!RPM_PACKAGES[@]}"; do
   read -ra pkg_array <<<"${RPM_PACKAGES[$repo]}"
   if [[ $repo == copr:* ]]; then
